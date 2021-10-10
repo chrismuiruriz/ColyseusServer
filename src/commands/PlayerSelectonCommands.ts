@@ -1,6 +1,7 @@
 import { Command } from "@colyseus/command";
 import { Client } from "colyseus";
 import ITMIState, { Cell } from "../types/ITMIState";
+import NextTurnCommand from "./NextTurnCommand";
 
 type Payload = {
     client: Client;
@@ -19,10 +20,8 @@ export default class PlayerSelectionCommands extends Command<
         );
 
         const cellValue = clientIndex === 0 ? Cell.x : Cell.o;
-        console.log(`cell value ${cellValue}`);
-        console.log(`index ${index}`);
-        console.log(`client index ${clientIndex}`);
-        console.log(`cell.x ${Cell.x}`);
         this.room.state.board[index] = cellValue;
+
+        return [new NextTurnCommand()];
     }
 }

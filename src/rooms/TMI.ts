@@ -1,4 +1,4 @@
-import { Room } from "colyseus";
+import { Client, Room } from "colyseus";
 import { Dispatcher } from "@colyseus/command";
 import { Message } from "../types/Messages";
 import TMIState from "./TMIState";
@@ -17,5 +17,12 @@ export default class TMI extends Room<TMIState> {
                 index: message.index,
             });
         });
+    }
+
+    onJoin(client: Client) {
+        const idx = this.clients.findIndex(
+            (c) => c.sessionId === client.sessionId
+        );
+        client.send("playerIndex", { playerIndex: idx });
     }
 }
