@@ -29,6 +29,7 @@ export default class TMI extends Room<TMIState> {
 
         if (this.clients.length >= 2) {
             this.state.gameState = GameState.Playing;
+            this.lock();
         }
     }
 }
